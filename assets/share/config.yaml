@@ -1,0 +1,3 @@
+core:
+  data_home: $HOME/.local/share/codeline
+  projects_file: projects.json

@@ -1,0 +1,14 @@
+[Unit]
+Description=Codeline
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+WorkingDirectory=%h/.local/share/codeline
+ExecStart=/bin/sh -c "./venv/bin/python -m codeline"
+
+[Install]
+WantedBy=multi-user.target
