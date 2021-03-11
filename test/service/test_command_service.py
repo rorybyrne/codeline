@@ -35,13 +35,13 @@ class TestCommandService:
         raw_command = command_service._extract_raw_command(line)
         assert isinstance(raw_command, str)
 
-    def test_process_file_success(self):
-        fs = FileService()
-        ps = PluginService('/home/rory/projects/personal/codeline/dev/plugins')
-        cs = CommandService(ps, fs)
-        print(cs)
-
-        file = '/home/rory/projects/personal/codeline/dev/source.py'
-        cs.process_file(file)
+    # def test_process_file_success(self):
+    #     fs = FileService()
+    #     ps = PluginService('/home/rory/projects/personal/codeline/dev/plugins')
+    #     cs = CommandService(ps, fs)
+    #     print(cs)
+    #
+    #     file = '/home/rory/projects/personal/codeline/dev/source.py'
+    #     cs.process_file(file)
 
 
