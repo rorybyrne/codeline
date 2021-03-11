@@ -6,14 +6,40 @@ jobs:
     name: Lint Source Code
     runs-on: ubuntu-latest
     steps:
-      - name: Todo
-        run: echo "todo"
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Flake8
+        run: pip install flake8
+      - name: Lint
+        run: python -m flake8 codeline
   unit-test:
     name: Run Unit Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Todo
-        run: echo "todo"
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache tox
+        uses: actions/cache@v2
+        with:
+          # This path is specific to Ubuntu
+          path: ./.tox/py39
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+      - name: Install Tox
+        run: pip install tox
+      - name: Tox
+        run: tox
   integration-test:
     name: Run Integration Tests
     runs-on: ubuntu-latest
