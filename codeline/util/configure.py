@@ -9,16 +9,17 @@ from codeline.containers import Codeline
 
 HOME = str(Path.home())
 DEBUG = os.environ.get('CL_DEBUG')
-
-if DEBUG:
-    CONFIG_DIR = './dev'
-else:
-    CONFIG_DIR = os.path.join(HOME, ".local", "share", "codeline")
+print(f'DEBUG = {DEBUG}')
 
 
-def configure(codeline: Codeline):
-    config_filename = 'config-debug.yaml' if DEBUG else 'config.yaml'
-    config_file = os.path.join(CONFIG_DIR, config_filename)
+def configure(codeline: Codeline, debug=DEBUG):
+    if debug:
+        config_dir = './dev'
+    else:
+        config_dir = os.path.join(HOME, ".local", "share", "codeline")
+
+    config_filename = 'config-debug.yaml' if debug else 'config.yaml'
+    config_file = os.path.join(config_dir, config_filename)
     if not os.path.exists(config_file):
         raise RuntimeError(f'Config file not found at "{config_file}"')
 
