@@ -7,13 +7,14 @@ from watchdog.events import FileSystemEvent
 
 from codeline.oracle.handler.base import BaseEventHandler
 from codeline.service.command import CommandService
+from codeline.service.file import FileService
 from codeline.util.log import Logger
 
 
 class ProjectEventHandler(BaseEventHandler, Logger):
     """Handle changes in a project directory"""
 
-    def __init__(self, command_service: CommandService, file_service):
+    def __init__(self, command_service: CommandService, file_service: FileService):
         super().__init__()
         assert command_service
         assert file_service

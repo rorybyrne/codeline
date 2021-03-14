@@ -16,13 +16,18 @@ class FileService(Logger):
 
     def read(self, file_path: str) -> File:
         """Read the file into Line instances"""
-        if not FileService._is_file(file_path):
+        if not FileService.is_file(file_path):
             raise RuntimeError(f"{file_path} is not a file.")
 
         with open(file_path) as f:
             lines = f.readlines()
 
             return self._from_lines(lines)
+
+    @staticmethod
+    def is_file(path: str) -> bool:
+        """Check if the path is a file"""
+        return os.path.isfile(path)
 
     # Private #####################################################################################
 
@@ -41,11 +46,6 @@ class FileService(Logger):
         """Construct a File from a list of raw lines"""
         lines = [self._build_line(i + 1, line) for i, line in enumerate(lines)]
         return File(lines)
-
-    @staticmethod
-    def _is_file(path: str) -> bool:
-        """Check if the path is a file"""
-        return os.path.isfile(path)
 
     @staticmethod
     def _clean_line(line: str) -> str:
