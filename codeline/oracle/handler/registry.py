@@ -40,6 +40,7 @@ class RegistryEventHandler(BaseEventHandler, Logger):
             self._handler(project_dirs)
 
     def set_handler(self, handler: Callable):
+        """Set the handler"""
         if not handler:
             raise ValueError("Cannot assign a None handler")
         self._handler = handler

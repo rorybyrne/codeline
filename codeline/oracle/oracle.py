@@ -17,7 +17,7 @@ from codeline.util.log import Logger
 
 
 class Oracle(Logger):
-    """Observe the active workspaces"""
+    """Monitor active projects and the project registry"""
 
     def __init__(self, registry_service: RegistryService, observer: Observer,
                  project_event_handler: ProjectEventHandler,
@@ -37,7 +37,7 @@ class Oracle(Logger):
         self._registry_event_handler.set_handler(self._reconcile)
 
     def start(self):
-        """Start the observer"""
+        """Monitor the projects file and any registered projects"""
         # Watch the plan_home directory
         self.watch(self._plan_home, self._registry_event_handler, recursive=False)
         self._observer.start()
@@ -61,13 +61,14 @@ class Oracle(Logger):
         self._observer.join()
 
     def watch(self, directory: str, handler: FileSystemEventHandler, recursive=False):
-        """Watch a directory, and respond to any file changes"""
+        """Watch a project directory with the given handler"""
         watch = self._observer.schedule(handler, directory, recursive=recursive)
         self._watches_by_dir[directory] = watch
 
         self.log.debug(f"Watched {directory}")
 
     def unwatch(self, workspace: str):
+        """Unwatch a project"""
         watch = self._watches_by_dir[workspace]
         self._observer.unschedule(watch)
         del self._watches_by_dir[workspace]

@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "codeline"
-version = "0.0.1"
-description = "Make your code comments come alive"
+version = "0.1.0"
+description = "Run code-aware commands directly from your comments"
 authors = ["Rory Byrne <rory@rory.bio>"]
 
 [tool.poetry.dependencies]
@@ -11,6 +11,9 @@ dependency-injector = {version = "^4.29.2", extras = ["yaml"]}
 cachetools = "^4.2.1"
 
 [tool.poetry.dev-dependencies]
+tox = "^3.23.0"
+pytest = "^6.2.2"
+flake8 = "^3.8.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

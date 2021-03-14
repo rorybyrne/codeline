@@ -8,6 +8,9 @@ from watchdog.observers.polling import PollingObserver
 from codeline.oracle.handler.project import ProjectEventHandler
 from codeline.oracle.handler.registry import RegistryEventHandler
 from codeline.oracle.oracle import Oracle
+from codeline.service.command import CommandService
+from codeline.service.file import FileService
+from codeline.service.plugin import PluginService
 from codeline.service.registry import RegistryService
 
 
@@ -20,8 +23,23 @@ class Services(containers.DeclarativeContainer):
         RegistryService, projects_file=config.core.projects_file
     )
 
+    file_service = providers.Singleton(
+        FileService
+    )
+
+    plugin_service = providers.Singleton(
+        PluginService, plugin_directory=config.core.plugin_directory
+    )
+
+    command_service = providers.Singleton(
+        CommandService,
+        plugin_service=plugin_service,
+        file_service=file_service
+    )
+
 
 class Observer(containers.DeclarativeContainer):
+    """Dependency structure for observer"""
 
     config = providers.Configuration()
     services = providers.DependenciesContainer()
@@ -31,7 +49,11 @@ class Observer(containers.DeclarativeContainer):
         RegistryEventHandler, registry_service=services.registry_service
     )
 
-    project_event_handler = providers.Singleton(ProjectEventHandler)
+    project_event_handler = providers.Singleton(
+        ProjectEventHandler,
+        command_service=services.command_service,
+        file_service=services.file_service
+    )
 
     # Third-Party Dependencies
     observer = providers.Singleton(PollingObserver)
