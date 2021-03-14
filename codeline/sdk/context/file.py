@@ -10,6 +10,7 @@ from codeline.sdk.context.line import Line
 
 @dataclass
 class File:
+    """Model of a file, containing lines of source code"""
     lines: List[Line]
 
     def __getitem__(self, item: int) -> Union[Line, List[Line]]:

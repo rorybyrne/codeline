@@ -11,6 +11,12 @@ from codeline.util.log import Logger
 
 
 class RegistryService(Logger):
+    """Registry for the user's active projects
+
+    Projects are not monitored by default. To enable Codeline for a project,
+    you must run `codeline activate <src_dir>` in the root directory of the project.
+    """
+
     def __init__(self, projects_file: str):
         super().__init__()
         assert projects_file, "Projects filename missing"
@@ -23,7 +29,7 @@ class RegistryService(Logger):
         return projects
 
     def register(self, project: Project):
-        """Initialize the project
+        """Registers the project to be monitored by Codeline
 
         Args:
             project:    The project to be registered
@@ -31,6 +37,7 @@ class RegistryService(Logger):
         project_registered = self._project_is_registered(project)
 
         if project_registered:
+            self.log.debug(f'Project already registered: {project}')
             return
         else:
             self._register(project)
@@ -42,13 +49,16 @@ class RegistryService(Logger):
     # Private ###
 
     def _register(self, project: Project):
+        """Performs the registration"""
         self._save_project(project)
 
     def _project_is_registered(self, project: Project):
+        """Checks if the project exists among the existing saved projects"""
         projects = self._load_projects()
         return any(pj for pj in projects if pj.root_dir == project.root_dir)
 
     def _save_project(self, project: Project):
+        """Saves the project to the project file"""
         projects = self._load_projects()
         if self._project_is_registered(project):
             raise RuntimeError("Project already exists")
@@ -57,6 +67,7 @@ class RegistryService(Logger):
             self._save_projects(projects)
 
     def _load_projects(self) -> List[Project]:
+        """Loads registered projects from the projects file"""
         try:
             with open(self._projects_file, "r") as f:
                 projects_data: dict = json.load(f)
@@ -69,6 +80,7 @@ class RegistryService(Logger):
             raise RuntimeError(f"Could not find projects file: {self._projects_file}")
 
     def _save_projects(self, projects: List[Project]):
+        """Saves the list of projects, overwriting the current file"""
         try:
             with open(self._projects_file, "r+") as f:
                 projects_data: dict = json.load(f)

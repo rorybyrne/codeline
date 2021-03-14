@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "codeline"
-version = "0.0.1"
-description = "Make your code comments come alive"
+version = "0.1.0"
+description = "Run code-aware commands directly from your comments"
 authors = ["Rory Byrne <rory@rory.bio>"]
 
 [tool.poetry.dependencies]

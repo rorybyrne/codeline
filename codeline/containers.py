@@ -39,6 +39,7 @@ class Services(containers.DeclarativeContainer):
 
 
 class Observer(containers.DeclarativeContainer):
+    """Dependency structure for observer"""
 
     config = providers.Configuration()
     services = providers.DependenciesContainer()

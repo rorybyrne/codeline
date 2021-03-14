@@ -5,38 +5,26 @@ Author: Rory Byrne <rory@rory.bio>
 import os
 from typing import List
 
-from codeline.sdk.context.context import Context
 from codeline.sdk.context.file import File
-from codeline.sdk.context.line import Line, CommandLine
+from codeline.sdk.context.line import CommandLine, Line
 from codeline.sdk.util.regex import CommandRegex
 from codeline.util.log import Logger
 
 
 class FileService(Logger):
-
-    @staticmethod
-    def is_file(path: str) -> bool:
-        """Check if the path is a file"""
-        return os.path.isfile(path)
+    """Functionality for processing files"""
 
     def read(self, file_path: str) -> File:
         """Read the file into Line instances"""
-        if not FileService.is_file(file_path):
+        if not FileService._is_file(file_path):
             raise RuntimeError(f"{file_path} is not a file.")
 
         with open(file_path) as f:
             lines = f.readlines()
 
-            return self.from_lines(lines)
+            return self._from_lines(lines)
 
-    def build_context(self, file: File, command_index: int, up: int = 3, down: int = 3):
-        """Build a context for the given line of a file"""
-        return Context(file, command_index)
-
-    def from_lines(self, lines: List[str]) -> File:
-        """Construct a File from a list of raw lines"""
-        lines = [self._build_line(i + 1, line) for i, line in enumerate(lines)]
-        return File(lines)
+    # Private #####################################################################################
 
     def _build_line(self, index: int, raw: str):
         """Construct either a regular Line or a CommandLine, depending on the content of the line"""
@@ -48,6 +36,16 @@ class FileService(Logger):
             return CommandLine(index, line, command, tail)
         except Exception:
             return Line(index, line)
+
+    def _from_lines(self, lines: List[str]) -> File:
+        """Construct a File from a list of raw lines"""
+        lines = [self._build_line(i + 1, line) for i, line in enumerate(lines)]
+        return File(lines)
+
+    @staticmethod
+    def _is_file(path: str) -> bool:
+        """Check if the path is a file"""
+        return os.path.isfile(path)
 
     @staticmethod
     def _clean_line(line: str) -> str:

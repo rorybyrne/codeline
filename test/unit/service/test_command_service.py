@@ -6,7 +6,7 @@ from codeline.service.command import CommandService
 from codeline.service.file import FileService
 
 SOURCE_COMMAND = """def my_function(input: str):
-    # <| echo "hello"
+    # <| test "hello"
     do_something(input)
     with open(str) as f: # ~$ echo "inline trigger"
         f.write(input)
@@ -30,18 +30,18 @@ class TestCommandService:
     def file_service(self):
         return FileService()
 
-    def test_parse_file_success(self, command_service, file_service):
+    def test_parse_file_success(self, command_service: CommandService, file_service: FileService):
         raw_lines = SOURCE_COMMAND.split('\n')
-        file = file_service.from_lines(raw_lines)
+        file = file_service._from_lines(raw_lines)
 
         commands = command_service._parse_commands(file)
 
-        assert commands is not None and len(commands) is 1
+        assert commands is not None and len(commands) == 1
 
     def test_parse_file_failure_no_command(self, command_service, file_service):
         raw = SOURCE_NO_COMMAND.split('\n')
-        file = file_service.from_lines(raw)
+        file = file_service._from_lines(raw)
 
         commands = command_service._parse_commands(file)
 
-        assert len(commands) is 0
+        assert len(commands) == 0

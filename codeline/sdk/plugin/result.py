@@ -7,5 +7,6 @@ from dataclasses import dataclass
 
 @dataclass
 class Result:
+    """The final outcome of your plugin's execution"""
     successful: bool
     message: str

@@ -11,6 +11,7 @@ from codeline.util.log import Logger
 
 
 class ProjectEventHandler(BaseEventHandler, Logger):
+    """Handle changes in a project directory"""
 
     def __init__(self, command_service: CommandService, file_service):
         super().__init__()
@@ -20,19 +21,11 @@ class ProjectEventHandler(BaseEventHandler, Logger):
         self._file = file_service
 
     def on_modified(self, event: FileSystemEvent):
-        """Handle modification events
-
-        0. Ignore if it's in .gitignore
-        1. Check if it's a file modification
-        2. Parse the file into a list of Command instances
-
-        @param event: The event
-        """
+        """Handle modification events"""
         event_path = event.src_path
         if not self._file.is_file(event_path):
             return
         elif not event_path.endswith('.py'):
             return
         else:
-            print(f'Got file {event_path}')
             self._command.process_file(event_path)

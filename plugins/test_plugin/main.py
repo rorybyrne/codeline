@@ -1,5 +1,3 @@
-import time
-
 from codeline.sdk import CodelinePlugin
 from codeline.sdk.context.context import Context
 from codeline.sdk.plugin.result import Result

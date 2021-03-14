@@ -6,6 +6,7 @@ from codeline.sdk.context.file import File
 
 
 class Writer:
+    """Simple file-writing class to be used by the plugin's Context"""
 
     def __init__(self, file_path: str):
         self._file_path = file_path

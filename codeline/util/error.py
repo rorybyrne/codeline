@@ -6,6 +6,7 @@ from typing import Callable
 
 
 def catch(fn: Callable, to_return=None):
+    """Utility for catching exceptions in a list comprehension"""
     try:
         return fn()
     except Exception:

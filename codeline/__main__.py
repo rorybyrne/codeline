@@ -1,4 +1,4 @@
-"""Service entrypoint
+"""Entrypoint for Codeline
 
 Author: Rory Byrne <rory@rory.bio>
 """
@@ -17,6 +17,10 @@ logger = logging.getLogger(__name__)
 
 
 def main():
+    """Configure the launch the dependency injector
+
+    If a file is passed in via argv, that will be run directly.
+    """
     codeline = Codeline()
     configure(codeline, debug=True)
     log_conf = codeline.config.core.log_conf()
@@ -29,9 +33,8 @@ def main():
             launch_direct(file_path)
         else:
             launch()
-    except Exception:
-        # logger.exception(e)
-        raise
+    except Exception as e:
+        logger.exception(e)
 
 
 @inject
@@ -39,11 +42,13 @@ def launch_direct(
     file_path: str,
     command_service: CommandService = Provide[Codeline.services.command_service]
 ):
+    """Process a file directly"""
     command_service.process_file(file_path)
 
 
 @inject
 def launch(oracle: Oracle = Provide[Codeline.oracle]):
+    """Run the oracle to watch for changes"""
     logger.info("Launching Codeline...")
     oracle.start()
 

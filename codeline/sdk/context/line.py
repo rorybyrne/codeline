@@ -9,6 +9,12 @@ from typing import Optional
 
 @dataclass
 class Line(ABC):
+    """Model of a line of source code
+
+    Attrs:
+        number      The line's number in the file
+        text        The literal content of the line
+    """
     number: int
     _text: str
 
@@ -29,6 +35,13 @@ class Line(ABC):
 
 @dataclass
 class CommandLine(Line):
+    """Model of a line of source code containing a command
+
+    Attrs:
+        command         The trigger word for the command
+        options         The options passed to the command
+        response        The response that the plugin has currently set for the coder
+    """
     _command: str
     _options: str
     _response: Optional[str] = field(init=False, default=None)

@@ -9,10 +9,10 @@ from codeline.containers import Codeline
 
 HOME = str(Path.home())
 DEBUG = os.environ.get('CL_DEBUG')
-print(f'DEBUG = {DEBUG}')
 
 
 def configure(codeline: Codeline, debug=DEBUG):
+    """Configure the Codeline dependency container"""
     if debug:
         config_dir = './dev'
     else:
