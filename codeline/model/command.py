@@ -4,20 +4,33 @@ Author: Rory Byrne <rory@rory.bio>
 """
 from dataclasses import dataclass
 
-from codeline.model.file import Context
-from codeline.model.plugin import Plugin
+from codeline.model.pluginmeta import PluginMeta
+from codeline.model.writer import Writer
+from codeline.sdk.context.context import Context
+from codeline.sdk.exception import PluginException
 
 
 @dataclass
 class Command:
-    raw: str
-    plugin: Plugin
+    trigger: str
+    options: str
+    plugin: PluginMeta
     context: Context
 
-    def run(self):
-        result = self.plugin.invoke(self.context)
-        if not result.successful:
-            print("Command failed.")
-        else:
-            print("Command successful.")
-        print(result.message)
+    def __str__(self):
+        return f'Command[ {self.trigger} ]'
+
+    def run(self, file_path: str):
+        print('\n')
+        writer = Writer(file_path)
+        self.context.writer = writer
+        try:
+            result = self.plugin.invoke(self.context)
+            if not result.successful:
+                print("Command failed.")
+            else:
+                print("Command successful.")
+            print(result.message)
+        except PluginException as e:
+            print(e)
+            raise

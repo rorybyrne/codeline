@@ -1,16 +1,16 @@
-"""Plugin model
+"""PluginMeta model
 
 Author: Rory Byrne <rory@rory.bio>
 """
 from dataclasses import dataclass, field
 
-from codeline.model.file import Context
+from codeline.sdk.context.context import Context
 from codeline.sdk.plugin.plugin import CodelinePlugin
 from codeline.sdk.plugin.result import Result
 
 
 @dataclass
-class Plugin:
+class PluginMeta:
     name: str
     implementation: CodelinePlugin
     title: str = field(init=False)

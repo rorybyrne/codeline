@@ -30,6 +30,9 @@ class ProjectEventHandler(BaseEventHandler, Logger):
         """
         event_path = event.src_path
         if not self._file.is_file(event_path):
-            raise RuntimeError(f"Expected a file: {event}")
-
-        self._command.process_file(event_path)
+            return
+        elif not event_path.endswith('.py'):
+            return
+        else:
+            print(f'Got file {event_path}')
+            self._command.process_file(event_path)
