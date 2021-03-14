@@ -6,30 +6,20 @@
   <img src="https://user-images.githubusercontent.com/9436784/111063516-ed8fe480-84a6-11eb-9a8d-c5235c3d9e3c.png">
 </p>
 <p align="center">
-    Codeline allows you to run code-aware commands from your source code comments.
+  <b>Codeline allows you to run code-aware commands from your source code comments.</b>
 </p>
+<br/>
 
 ![codeline](https://user-images.githubusercontent.com/9436784/111068981-d959e080-84c2-11eb-9b13-7b00d751fc10.gif)
 
 <p>
-  Codeline runs as a service and monitors any projects where you have activated it. Any comment beginning with <code><|</code> will be processed, and Codeline will run the corresponding plugin. The `codegen` plugin is just an example, and doesn't actually exist (yet!).
+  Codeline runs as a service and monitors any projects where you have activated it. Any comment beginning with <code><|</code> will be processed, and Codeline will run the corresponding plugin. The <code>codegen</code> plugin is just an example, and doesn't actually exist (yet).
 </p>
 <h2>Installation</h2>
+<b>Codeline is in a pre-release state, so the only way to run it is to invoke python directly.</b>
 <h3>Requirements</h3>
 <code>python3.8</code>
 <code>systemd</code>
-<h3>Instructions</h3>
-<ol>
-    <li><code>git clone https://github.com/synek/codeline</code></li>
-    <li><code>cd codeline</code></li>
-    <li><code>make install</code></li>
-</ol>
-<p>
-    If you have trouble with the install, check what the <code>Makefile</code> is doing. Get in touch with me if you need help.
-</p>
-<p>
-    To uninstall, run <code>make uninstall</code>
-</p>
 <h2>Commands</h2>
 <p>
   Commands are implemented as Python plugins, built using a rich API for interacting with the
