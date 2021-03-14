@@ -20,8 +20,8 @@ jobs:
         run: pip install flake8
       - name: Lint
         run: python -m flake8 codeline
-  unit-test:
-    name: Run Unit Tests
+  tests:
+    name: Run Tests
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
@@ -44,9 +44,3 @@ jobs:
         run: pip install tox
       - name: Tox
         run: tox
-  integration-test:
-    name: Run Integration Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Todo
-        run: echo "todo"
