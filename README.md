@@ -1,8 +1,4 @@
 <p align="center">
-  <img src="https://github.com/synek/codeline/workflows/Full%20Tests/badge.svg">
-</p>
-
-<p align="center">
   <img src="https://user-images.githubusercontent.com/9436784/111063516-ed8fe480-84a6-11eb-9a8d-c5235c3d9e3c.png">
 </p>
 <p align="center">
@@ -11,7 +7,9 @@
 <br/>
 
 ![codeline](https://user-images.githubusercontent.com/9436784/111068981-d959e080-84c2-11eb-9b13-7b00d751fc10.gif)
-
+<p>
+  <img src="https://github.com/synek/codeline/workflows/Full%20Tests/badge.svg">
+</p>
 <p>
   Codeline runs as a service and monitors any projects where you have activated it. Any comment beginning with <code><|</code> will be processed, and Codeline will run the corresponding plugin. The <code>codegen</code> plugin is just an example, and doesn't actually exist (yet).
 </p>
