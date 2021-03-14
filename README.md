@@ -11,7 +11,7 @@
   <img src="https://github.com/synek/codeline/workflows/Full%20Tests/badge.svg">
 </p>
 <p>
-  Codeline runs as a service and monitors any projects where you have activated it. Any comment beginning with <code><|</code> will be processed, and Codeline will run the corresponding plugin. The <code>codegen</code> plugin is just an example, and doesn't actually exist (yet).
+  Codeline runs as a service and monitors any projects where you have activated it. If it finds a comment beginning with <code><|</code> then it will run the corresponding plugin. The <code>codegen</code> plugin is just an example, and doesn't actually exist yet.
 </p>
 <h2>Installation</h2>
 Codeline is in a pre-release state, so I recommend that you don't try to use it.
