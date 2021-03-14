@@ -8,7 +8,8 @@
 <p align="center">
     Codeline allows you to run code-aware commands from your source code comments.
 </p>
-<img src="https://user-images.githubusercontent.com/9436784/111066445-07392800-84b7-11eb-94e0-9cf623b47322.gif"/>
+
+![codeline](https://user-images.githubusercontent.com/9436784/111068579-410f2c00-84c1-11eb-839d-60302e2b84a3.gif)
 
 <p>
   Codeline runs as a service and monitors any projects where you have activated it. Any comment beginning with <code><|</code> will be processed, and Codeline will run the corresponding plugin. The `codegen` plugin is just an example, and doesn't actually exist (yet!).
