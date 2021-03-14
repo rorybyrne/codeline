@@ -24,7 +24,7 @@ Codeline is in a pre-release state, so the only way to run it is to invoke pytho
   source code around the command.
 </p>
 <p>
-  The first planned plugin is <code>git</code>. It will allow you to automatically commit a single-line change by running a command like <code># <| git commit --now -m "your message"</code>.
+  The first planned plugin is <code>git</code>. It will allow you to automatically commit a single-line change by running a command like </br> <code># <| git commit --now -m "your message"</code>.
 </p>
 <h2>Contributing</h2>
 <p>
