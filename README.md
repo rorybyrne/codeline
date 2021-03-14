@@ -14,7 +14,7 @@
   Codeline runs as a service and monitors any projects where you have activated it. Any comment beginning with <code><|</code> will be processed, and Codeline will run the corresponding plugin. The <code>codegen</code> plugin is just an example, and doesn't actually exist (yet).
 </p>
 <h2>Installation</h2>
-<b>Codeline is in a pre-release state, so the only way to run it is to invoke python directly.</b>
+Codeline is in a pre-release state, so the only way to run it is to invoke python directly.
 <h3>Requirements</h3>
 <code>python3.8</code>
 <code>systemd</code>
