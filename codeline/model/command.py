@@ -33,22 +33,3 @@ class Command:
 
     def __str__(self):
         return f'Command[ {self.trigger} ]'
-
-    def run(self, file_path: str):
-        """Run the command
-
-        Attaches a writer to the context and then invokes the plugin
-        """
-        writer = Writer(file_path)
-        self.context.set_writer(writer)
-        try:
-            result = self.plugin.invoke(self.context)
-            if not result.successful:
-                log.debug("Command failed.")
-            else:
-                log.debug("Command successful.")
-            log.debug(result.message)
-        except PluginException as e:
-            log.exception(e)
-            self.context.write_response(str(e))
-            raise

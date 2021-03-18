@@ -2,16 +2,22 @@
 
 Author: Rory Byrne <rory@rory.bio>
 """
-
+import logging
+from argparse import ArgumentParser
+import shlex
 from typing import List
 
 from codeline.model.command import Command
+from codeline.model.writer import Writer
 from codeline.sdk.context.context import Context
 from codeline.sdk.context.file import File
 from codeline.sdk.context.line import CommandLine
+from codeline.sdk.exception import PluginException
 from codeline.service.file import FileService
 from codeline.service.plugin import PluginService
 from codeline.util.error import catch
+
+log = logging.getLogger(__name__)
 
 
 class CommandService:
@@ -30,9 +36,37 @@ class CommandService:
         commands = self._parse_commands(file)
 
         for command in commands:
-            command.run(file_path)
+            self._run_command(command)
 
     # Private ###############################################################################
+
+    def _run_command(self, command: Command):
+        writer = Writer(command.context.file.path)
+        command.context.set_writer(writer)
+        kwargs = self._parse_args(command)
+
+        try:
+            result = command.plugin.invoke(command.context, **kwargs)
+            if not result.successful:
+                log.debug("Command failed.")
+            else:
+                log.debug("Command successful.")
+            log.debug(result.message)
+        except PluginException as e:
+            log.exception(e)
+            command.context.write_response(str(e))
+            raise
+        except Exception:
+            command.context.write_response("An unknown error occurred")
+            raise
+
+    def _parse_args(self, command: Command):
+        parser = ArgumentParser(command.plugin.title)
+        command.plugin.implementation.define_arguments(parser)
+
+        print(f"Parsing: '{shlex.split(command.options)}'")
+        namespace = parser.parse_args(shlex.split(command.options))
+        return vars(namespace)
 
     def _parse_commands(self, file: File) -> List[Command]:
         """Parse the file into a list of Commands"""

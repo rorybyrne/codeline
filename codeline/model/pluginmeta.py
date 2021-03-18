@@ -36,6 +36,6 @@ class PluginMeta:
         self.title = self.implementation.title
         self.trigger = self.implementation.trigger
 
-    def invoke(self, context: Context) -> Result:
+    def invoke(self, context: Context, **kwargs) -> Result:
         """Invoke the plugin"""
-        return self.implementation.main(context=context)
+        return self.implementation.main(context=context, **kwargs)
