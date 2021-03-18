@@ -2,7 +2,7 @@
 
 Author: Rory Byrne <rory@rory.bio>
 """
-from codeline.util.log import Logger
+import logging
 from dataclasses import dataclass
 
 from codeline.model.pluginmeta import PluginMeta
@@ -10,9 +10,11 @@ from codeline.model.writer import Writer
 from codeline.sdk.context.context import Context
 from codeline.sdk.exception import PluginException
 
+log = logging.getLogger(__name__)
+
 
 @dataclass
-class Command(Logger):
+class Command:
     """Models a command to be run by Codeline
 
     Attrs:
@@ -42,10 +44,11 @@ class Command(Logger):
         try:
             result = self.plugin.invoke(self.context)
             if not result.successful:
-                self.log.debug("Command failed.")
+                log.debug("Command failed.")
             else:
-                self.log.debug("Command successful.")
-            self.log.debug(result.message)
+                log.debug("Command successful.")
+            log.debug(result.message)
         except PluginException as e:
-            self.log.exception(e)
+            log.exception(e)
+            self.context.write_response(str(e))
             raise

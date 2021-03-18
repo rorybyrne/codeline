@@ -3,18 +3,18 @@
 Author: Rory Byrne <rory@rory.bio>
 """
 
-from codeline.sdk.context.context import Context
-from codeline.sdk.context.line import CommandLine
 from typing import List
+
 from codeline.model.command import Command
+from codeline.sdk.context.context import Context
 from codeline.sdk.context.file import File
+from codeline.sdk.context.line import CommandLine
 from codeline.service.file import FileService
 from codeline.service.plugin import PluginService
 from codeline.util.error import catch
-from codeline.util.log import Logger
 
 
-class CommandService(Logger):
+class CommandService:
     """Functionality for running Codeline commands"""
 
     def __init__(self, plugin_service: PluginService, file_service: FileService):

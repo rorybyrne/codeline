@@ -2,7 +2,10 @@
 
 Author: Rory Byrne <rory@rory.bio>
 """
+import logging
 from typing import Callable
+
+logger = logging.getLogger(__name__)
 
 
 def catch(fn: Callable, to_return=None):

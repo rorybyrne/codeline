@@ -17,6 +17,6 @@ class CodelinePlugin(ABC):
     trigger = None
 
     @abstractmethod
-    def main(self, context: Context, **kwargs) -> Result:
+    def main(self, context: Context) -> Result:
         """Implement your plugin here"""
         raise NotImplementedError()

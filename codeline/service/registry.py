@@ -3,14 +3,16 @@
 Author: Rory Byrne <rory@rory.bio>
 """
 import json
+import logging
 import os
 from typing import List
 
 from codeline.model.project import Project
-from codeline.util.log import Logger
+
+log = logging.getLogger(__name__)
 
 
-class RegistryService(Logger):
+class RegistryService:
     """Registry for the user's active projects
 
     Projects are not monitored by default. To enable Codeline for a project,
@@ -37,7 +39,7 @@ class RegistryService(Logger):
         project_registered = self._project_is_registered(project)
 
         if project_registered:
-            self.log.debug(f'Project already registered: {project}')
+            log.debug(f'Project already registered: {project}')
             return
         else:
             self._register(project)

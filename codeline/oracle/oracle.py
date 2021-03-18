@@ -2,7 +2,7 @@
 
 @author Rory Byrne <rory@rory.bio>
 """
-
+import logging
 from typing import Dict, List
 
 from time import sleep
@@ -13,10 +13,11 @@ from watchdog.observers.api import ObservedWatch
 from codeline.oracle.handler.project import ProjectEventHandler
 from codeline.oracle.handler.registry import RegistryEventHandler
 from codeline.service.registry import RegistryService
-from codeline.util.log import Logger
+
+log = logging.getLogger(__name__)
 
 
-class Oracle(Logger):
+class Oracle:
     """Monitor active projects and the project registry"""
 
     def __init__(self, registry_service: RegistryService, observer: Observer,
@@ -45,7 +46,7 @@ class Oracle(Logger):
         # Watch the registered workspaces
         projects = self._registry_service.load_projects()
         if len(projects) == 0:
-            self.log.debug("No projects found.")
+            log.debug("No projects found.")
         else:
             for project in projects:
                 self.watch(
@@ -65,7 +66,7 @@ class Oracle(Logger):
         watch = self._observer.schedule(handler, directory, recursive=recursive)
         self._watches_by_dir[directory] = watch
 
-        self.log.debug(f"Watched {directory}")
+        log.debug(f"Watched {directory}")
 
     def unwatch(self, workspace: str):
         """Unwatch a project"""
@@ -84,7 +85,7 @@ class Oracle(Logger):
             if watched_project not in project_dirs:
                 to_remove = watched_project
                 self.unwatch(to_remove)
-                self.log.debug(f"Unwatched {to_remove}")
+                log.debug(f"Unwatched {to_remove}")
 
     @property
     def _watched_paths(self):

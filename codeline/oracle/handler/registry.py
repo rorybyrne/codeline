@@ -10,12 +10,11 @@ from watchdog.events import FileSystemEvent
 
 from codeline.oracle.handler.base import BaseEventHandler
 from codeline.service.registry import RegistryService
-from codeline.util.log import Logger
 
 TimedEvent = Tuple[int, str]
 
 
-class RegistryEventHandler(BaseEventHandler, Logger):
+class RegistryEventHandler(BaseEventHandler):
     """Handle changes to the projects registry"""
 
     def __init__(self, registry_service: RegistryService):
