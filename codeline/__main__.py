@@ -21,7 +21,7 @@ def main():
 
     If a file is passed in via argv, that will be run directly.
     """
-    codeline = Codeline()  # sup
+    codeline = Codeline()
     configure(codeline, debug=True)
     log_conf = codeline.config.core.log_conf()
     log.configure(log_conf)
