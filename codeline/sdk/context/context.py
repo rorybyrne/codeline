@@ -35,6 +35,11 @@ class Context:
 
         return line
 
+    @property
+    def command_index(self):
+        """Returns the line number where the command appears"""
+        return self._command_index
+
     def write_response(self, message: str):
         """Writes a response message to the coder"""
         cmd_line = self.command_line
