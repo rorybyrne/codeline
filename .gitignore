@@ -131,3 +131,4 @@ dmypy.json
 dev/
 .tox/
 .vscode/
+Session.vim

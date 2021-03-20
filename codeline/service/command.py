@@ -36,11 +36,10 @@ class CommandService:
         commands = self._parse_commands(file)
 
         for command in commands:
-            self._run_command(command)
+            self.run_command(command)
 
-    # Private ###############################################################################
-
-    def _run_command(self, command: Command):
+    def run_command(self, command: Command):
+        """Runs the given command"""
         writer = Writer(command.context.file.path)
         command.context.set_writer(writer)
         kwargs = self._parse_args(command)
@@ -60,7 +59,11 @@ class CommandService:
             command.context.write_response("An unknown error occurred")
             raise
 
-    def _parse_args(self, command: Command):
+    # Private ###############################################################################
+
+
+    @staticmethod
+    def _parse_args(command: Command):
         parser = ArgumentParser(command.plugin.title)
         command.plugin.implementation.define_arguments(parser)
 
@@ -73,7 +76,8 @@ class CommandService:
         return [
             command
             for i, _ in enumerate(file)
-            if (command := catch(lambda: self._parse_command(file, i))) is not None  # Note the catch
+            # pylint: disable=cell-var-from-loop
+            if (command := catch(lambda: self._parse_command(file, i))) is not None
         ]
 
     def _parse_command(self, file: File, line_no: int) -> Command:
@@ -86,8 +90,8 @@ class CommandService:
             plugin = self._plugin.get_plugin_for_trigger(trigger)
 
             return Command(trigger, options, plugin, context)
-        else:
-            raise ValueError(f"Line is not a command-line: {line}")
+
+        raise ValueError(f"Line is not a command-line: {line}")
 
     @staticmethod
     def _build_context(file: File, line_no: int) -> Context:
