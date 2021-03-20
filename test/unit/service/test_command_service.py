@@ -1,3 +1,4 @@
+from pathlib import Path
 from unittest.mock import patch
 
 import pytest
@@ -32,15 +33,15 @@ class TestCommandService:
 
     def test_parse_file_success(self, command_service: CommandService, file_service: FileService):
         raw_lines = SOURCE_COMMAND.split('\n')
-        file = file_service._from_lines(raw_lines)
+        file = file_service._from_lines(Path('.'), raw_lines)
 
         commands = command_service._parse_commands(file)
 
         assert commands is not None and len(commands) == 1
 
-    def test_parse_file_failure_no_command(self, command_service, file_service):
+    def test_parse_file_failure_no_command(self, command_service, file_service: FileService):
         raw = SOURCE_NO_COMMAND.split('\n')
-        file = file_service._from_lines(raw)
+        file = file_service._from_lines(Path('.'), raw)
 
         commands = command_service._parse_commands(file)
 

@@ -15,7 +15,6 @@ class Line(ABC):
         number      The line's number in the file
         text        The literal content of the line
     """
-    number: int
     _text: str
 
     def __contains__(self, item: str):

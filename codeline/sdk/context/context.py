@@ -3,7 +3,7 @@
 Author: Rory Byrne <rory@rory.bio>
 """
 from dataclasses import dataclass, field
-from typing import List, Any
+from typing import List, Any, Optional
 
 from codeline.sdk.context.file import File
 from codeline.sdk.context.line import Line, CommandLine
@@ -35,37 +35,43 @@ class Context:
 
         return line
 
+    @property
+    def command_index(self):
+        """Returns the line number where the command appears"""
+        return self._command_index
+
     def write_response(self, message: str):
         """Writes a response message to the coder"""
         cmd_line = self.command_line
 
         cmd_line.response = message
-        self._write()
+        self.write()
 
     def write_lines(self, lines: List[str]):
         """Write new lines into the source code, underneath the command line"""
         index = self._command_index + 1
         for raw in lines:
-            line = Line(index, raw.rstrip())
+            line = Line(raw.rstrip())
             self.file.lines.insert(index, line)
             index += 1
 
-        self._write()
+        self.write()
 
     def clear(self):
         """Clear your command from the source code"""
         del self.file[self._command_index]
 
-        self._write()
+        self.write()
 
     def set_writer(self, writer: Writer):
         """Sets the writer. Not intended for Plugins"""
         self._writer = writer
 
-    # Private #####################################################################################
-
-    def _write(self):
+    def write(self, file: Optional[File] = None):
         if not self._writer:
             raise ValueError("Writer is none")
 
-        self._writer.write(self.file)
+        if not file:
+            file = self.file
+
+        self._writer.write(file)

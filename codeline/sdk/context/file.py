@@ -3,6 +3,7 @@
 Author: Rory Byrne <rory@rory.bio>
 """
 from dataclasses import dataclass
+from pathlib import Path
 from typing import List, Union
 
 from codeline.sdk.context.line import Line
@@ -12,6 +13,7 @@ from codeline.sdk.context.line import Line
 class File:
     """Model of a file, containing lines of source code"""
     lines: List[Line]
+    path: Path
 
     def __getitem__(self, item: int) -> Union[Line, List[Line]]:
         return self.lines.__getitem__(item)
@@ -34,4 +36,4 @@ class File:
         return len(self.lines)
 
     def __str__(self):
-        return f'[File: {len(self.lines)} lines]'
+        return '\n'.join([str(line) for line in self.lines])

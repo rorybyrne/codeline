@@ -13,7 +13,7 @@ from codeline.service.command import CommandService
 from codeline.util import log
 from codeline.util.configure import configure
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger(f'codeline.{__name__}')
 
 
 def main():
@@ -25,6 +25,8 @@ def main():
     configure(codeline, debug=True)
     log_conf = codeline.config.core.log_conf()
     log.configure(log_conf)
+
+    logger.info("Launching Codeline...")
     codeline.wire(modules=[sys.modules[__name__]])
 
     try:
@@ -49,7 +51,6 @@ def launch_direct(
 @inject
 def launch(oracle: Oracle = Provide[Codeline.oracle]):
     """Run the oracle to watch for changes"""
-    logger.info("Launching Codeline...")
     oracle.start()
 
 

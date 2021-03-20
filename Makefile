@@ -41,3 +41,6 @@ uninstall:
 		rm -f $(SERVICE_FILE) && \
 		echo "Done." || \
 		echo "Could not delete service file."
+
+run-local:
+	@CL_DEBUG=1 python -m codeline

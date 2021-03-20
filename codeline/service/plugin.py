@@ -2,6 +2,8 @@
 
 Author: Rory Byrne <rory@rory.bio>
 """
+import logging
+
 from codeline.util.error import catch
 import importlib
 import importlib.util
@@ -13,18 +15,22 @@ import sys
 from codeline.exceptions import PluginImplementationException, PluginNotFoundException
 from codeline.model.pluginmeta import PluginMeta
 from codeline.sdk import CodelinePlugin
-from codeline.util.log import Logger
+
+log = logging.getLogger(__name__)
 
 
-class PluginService(Logger):
+class PluginService:
     """Functionality to load and handle plugins"""
 
     def __init__(self, plugin_directory: str):
         """Load plugins on-startup"""
         super().__init__()
+        log.debug(f'Loading plugins from {plugin_directory}')
         sys.path.insert(0, plugin_directory)
         loaded_plugins = self._load_all_plugins(plugin_directory)
         self._plugins = {plugin.trigger: plugin for plugin in loaded_plugins}
+        for name, _ in self._plugins.items():
+            log.debug(f'Loaded plugin: {name}')
 
     def get_plugin_for_trigger(self, trigger: str) -> PluginMeta:
         """Find the right plugin for a given command trigger"""
