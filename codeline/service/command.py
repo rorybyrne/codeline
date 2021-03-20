@@ -52,9 +52,8 @@ class CommandService:
                 log.debug("Command successful.")
             log.debug(result.message)
         except PluginException as e:
-            log.exception(e)
+            log.debug(e, exc_info=True, stack_info=True)
             command.context.write_response(str(e))
-            raise
         except Exception:
             command.context.write_response("An unknown error occurred")
             raise
