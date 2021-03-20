@@ -60,7 +60,6 @@ class CommandService:
 
     # Private ###############################################################################
 
-
     @staticmethod
     def _parse_args(command: Command):
         parser = ArgumentParser(command.plugin.title)

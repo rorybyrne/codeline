@@ -6,7 +6,7 @@ from codeline.service.file import FileService
 from codeline.service.plugin import PluginService
 
 SOURCE = """def myfunc():
-    # <| test dostuff
+    # <| test howdy
     print("howdy")
     return
 """

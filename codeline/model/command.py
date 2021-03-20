@@ -6,9 +6,7 @@ import logging
 from dataclasses import dataclass
 
 from codeline.model.pluginmeta import PluginMeta
-from codeline.model.writer import Writer
 from codeline.sdk.context.context import Context
-from codeline.sdk.exception import PluginException
 
 log = logging.getLogger(__name__)
 
