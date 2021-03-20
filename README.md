@@ -15,6 +15,9 @@
 </p>
 <h2>Installation</h2>
 Codeline is in a pre-release state, so I recommend that you don't try to use it.
+<p>
+  If you really want to, then clone the repository and use <code>poetry</code> to install dependencies.
+</p>
 <h3>Requirements</h3>
 <code>python3.8</code>
 <code>systemd</code>
@@ -24,7 +27,7 @@ Codeline is in a pre-release state, so I recommend that you don't try to use it.
   source code around the command.
 </p>
 <p>
-  The first planned plugin is <code>git</code>. It will allow you to automatically commit a single-line change by running a command like </br> <code># <| git commit --now -m "your message"</code>.
+  The first available command is <code>commit</code>. It allows you to automatically commit a "hunk" of code by running this Codeline above it: </br> <code># <| commit -m "your message"</code>.
 </p>
 <h2>Contributing</h2>
 <p>
