@@ -4,6 +4,7 @@
 """
 
 import logging
+from pathlib import Path
 from time import sleep
 from typing import Dict, List
 
@@ -38,22 +39,29 @@ class Oracle:
         self._registry_event_handler = registry_event_handler
         self._registry_event_handler.set_handler(self._reconcile)
 
-    def start(self):
+    def start(self, project_dir: Path = None):
         """Monitor the projects file and any registered projects"""
-        # Watch the plan_home directory
-        self.watch(self._plan_home, self._registry_event_handler, recursive=False)
-        self._observer.start()
-
-        # Watch the registered workspaces
-        projects = self._registry_service.load_projects()
-        if len(projects) == 0:
-            log.debug("No projects found.")
+        if project_dir:
+            self.watch(str(project_dir), self._project_event_handler, recursive=True)
+            self._start()
         else:
-            for project in projects:
-                self.watch(
-                    project.root_dir, self._project_event_handler, recursive=True
-                )
+            # Watch the plan_home directory
+            self.watch(self._plan_home, self._registry_event_handler, recursive=False)
 
+            # Watch the registered workspaces
+            projects = self._registry_service.load_projects()
+            if len(projects) == 0:
+                log.debug("No projects found.")
+            else:
+                for project in projects:
+                    self.watch(
+                        project.root_dir, self._project_event_handler, recursive=True
+                    )
+
+            self._start()
+
+    def _start(self):
+        self._observer.start()
         # Loop
         try:
             while True:

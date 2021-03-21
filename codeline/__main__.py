@@ -6,6 +6,7 @@ Author: Rory Byrne <rory@rory.bio>
 import logging
 import os
 import sys
+from argparse import ArgumentParser, Namespace
 from pathlib import Path
 
 from dependency_injector.wiring import Provide, inject
@@ -20,11 +21,22 @@ logger = logging.getLogger(f'codeline.{__name__}')
 DEBUG = os.environ.get('CL_DEBUG')
 
 
+def parse_args() -> Namespace:
+    """Parse arguments from command line"""
+    parser = ArgumentParser("Codeline")
+    parser.add_argument('--watch', type=str)
+    parser.add_argument('--run', type=str)
+
+    return parser.parse_args(sys.argv[1:])
+
+
 def main():
     """Configure the launch the dependency injector
 
     If a file is passed in via argv, that will be run directly.
     """
+    args = parse_args()
+
     settings = Settings.load(debug=DEBUG)
     codeline = Codeline()
     codeline.config.from_dict(vars(settings))
@@ -35,15 +47,25 @@ def main():
     logger.info("Launching Codeline...")
     codeline.wire(modules=[sys.modules[__name__]])
 
-    if len(sys.argv) > 1:
-        file_path = Path(sys.argv[1])
-        launch_direct(file_path)
+    if args.run:
+        run(Path(args.run).resolve())
+    elif args.watch:
+        watch(Path(args.watch).resolve())
     else:
         launch()
 
 
 @inject
-def launch_direct(
+def watch(
+    directory: Path,
+    oracle: Oracle = Provide[Codeline.oracle]
+):
+    """Watch a specific directory"""
+    oracle.start(directory)
+
+
+@inject
+def run(
     file_path: Path,
     command_service: CommandService = Provide[Codeline.services.command_service]
 ):
