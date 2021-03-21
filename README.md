@@ -2,19 +2,20 @@
   <img src="https://user-images.githubusercontent.com/9436784/111063516-ed8fe480-84a6-11eb-9a8d-c5235c3d9e3c.png">
 </p>
 <p align="center">
-  <b>Codeline allows you to run code-aware commands from your source code comments.</b>
+  <b>Run context-aware commands from your source code comments.</b>
 </p>
 <br/>
 
 ![codeline](https://user-images.githubusercontent.com/9436784/111068981-d959e080-84c2-11eb-9b13-7b00d751fc10.gif)
 ![tests](https://github.com/synek/codeline/workflows/Full%20Tests/badge.svg)
 
+Codeline allows you to run custom commands directly from source-code comments. You can run shell scripts or Python functions, and even pipe them together. Codeline provides a Python SDK for building commands that interact with the source-code context where the command is being run, and automatically communicates results and error messages to the user by editing the comment in-place. 
 
-Codeline runs as a service and monitors any projects where you have activated it. If it finds a comment beginning with <code><|</code> then it will run the corresponding plugin. The <code>codegen</code> plugin is just an example, and doesn't actually exist yet.
+The goal is to combine the expressiveness of command-line tools with the power of in-context IDE extensions like those found in VS Code.
+
+*Codeline is functional, but is still in the very-early stages of development.*  
 
 ## Installation
-
-*Codeline is still pre-release, so expect bugs.*  
 
 `git clone https://github.com/synek/codeline.git`  
 `poetry install`
@@ -40,6 +41,12 @@ def myfunc(data):
     data.do_something()
     print("done")
 ```
+
+## Future Work
+
+* Add support for shell scripts
+* Make it possible to pipe commands together
+* Publish documentation for the SDK
 
 ## Contributing
 
