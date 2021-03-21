@@ -24,12 +24,12 @@ The goal is to combine the expressiveness of command-line tools with the power o
 Codeline can monitor the current directory for file-changes, and then run any commands it finds:  
 `CL_DEBUG=1 poetry run codeline --watch .`
 
-Alternatively, you can run Codeline on a single file. Codeline will execute any commands that it finds in the file and then exit.  
+Alternatively you can run Codeline on a single file, executing any commands the file and then exiting.  
 `CL_DEBUG=1 poetry run codeline --run path/to/python/file.py`
 
 ## Commands
 
-Commands are implemented as Python plugins. The SDK for building commands is found in `codeline/sdk`.
+Currently, commands are implemented as Python plugins. The SDK for building commands is found in `codeline/sdk`.
 
 ### Commit
 This command allows you to automatically commit a "hunk" of code. 
