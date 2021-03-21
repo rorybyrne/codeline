@@ -16,14 +16,16 @@ jobs:
           python-version: "3.9"
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Pylint
-        run: pip install pylint
-      - name: Install MyPy
-        run: pip install mypy
+	  - run: |
+    	  pip install -U pip
+    	  pip install poetry
+    	  poetry install
+  		env:
+    	  POETRY_VIRTUALENVS_CREATE: false
       - name: Run Pylint
-        run: python -m pylint codeline
+        run: poetry run pylint codeline
       - name: Run MyPy
-        run: python -m mypy codeline
+        run: poetry run mypy codeline
   tests:
     name: Run Tests
     runs-on: ubuntu-latest
