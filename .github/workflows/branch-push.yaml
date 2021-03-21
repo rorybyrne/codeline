@@ -16,7 +16,8 @@ jobs:
           python-version: "3.9"
       - name: Checkout
         uses: actions/checkout@v2
-	  - run: |
+      - name: Poetry install
+	    run: |
     	  pip install -U pip
     	  pip install poetry
     	  poetry install
