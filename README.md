@@ -9,11 +9,15 @@
 ![codeline](https://user-images.githubusercontent.com/9436784/111068981-d959e080-84c2-11eb-9b13-7b00d751fc10.gif)
 ![tests](https://github.com/synek/codeline/workflows/Full%20Tests/badge.svg)
 
-Codeline allows you to run custom commands directly from source-code comments. You can run shell scripts or Python functions, and even pipe them together. Codeline provides a Python SDK for building commands that interact with the source-code context where the command is being run, and automatically communicates results and error messages to the user by editing the comment in-place. 
+Codeline allows you to run custom commands directly from source-code comments, combining the expressiveness of the command-line with the power of an extensions API like VS Code. 
 
-The goal is to combine the expressiveness of command-line tools with the power of in-context IDE extensions like those found in VS Code.
+Codeline allows you to pipe commands together, and automatically updates the comment in-place with command results, allowing for a semi-interactive experience.
+
+## Current State
 
 *Codeline is functional, but is still in the very-early stages of development.*  
+
+Please join the [discussions](https://github.com/synek/codeline/discussions), add issues, and get involved.
 
 ## Installation
 
