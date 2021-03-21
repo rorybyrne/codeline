@@ -28,11 +28,10 @@ Alternatively, you can run Codeline on a single file. Codeline will execute any 
 
 ## Commands
 
-Commands are implemented as Python plugins, built using a rich API for interacting with the
-source code around the command.
+Commands are implemented as Python plugins. The SDK for building commands is found in `codeline/sdk`.
 
 ### Commit
-This allows you to automatically commit a "hunk" of code below a certain line. 
+This command allows you to automatically commit a "hunk" of code. 
 
 Example usage: 
 ```
