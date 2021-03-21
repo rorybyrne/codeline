@@ -16,10 +16,14 @@ jobs:
           python-version: "3.9"
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install Flake8
-        run: pip install flake8
-      - name: Lint
-        run: python -m flake8 codeline
+      - name: Install Pylint
+        run: pip install pylint
+      - name: Install MyPy
+        run: pip install mypy
+      - name: Run Pylint
+        run: python -m pylint codeline
+      - name: Run MyPy
+        run: python -m mypy codeline
   tests:
     name: Run Tests
     runs-on: ubuntu-latest
