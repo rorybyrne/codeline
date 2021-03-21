@@ -18,6 +18,7 @@ check-dirs:
 	@test -d $(INSTALL_DIR) || (echo "Missing the install directory: $(INSTALL_DIR)" && exit 1)
 
 install: check-env check-dirs
+	@echo "Make install not supported" && exit 1
 	@echo "Installing to $(INSTALL_DIR)"
 	install -d $(SHARE_DIR)
 	install -m 0644 assets/share/* $(SHARE_DIR)
@@ -29,6 +30,7 @@ install: check-env check-dirs
 	systemctl --user enable $(SERVICE_FILE) --now
 
 uninstall:
+	@echo "Make uninstall not supported" && exit 1
 	@echo "Deleting share files..."
 	@test -d $(SHARE_DIR) && \
 		rm -rf $(SHARE_DIR) && \
@@ -43,4 +45,4 @@ uninstall:
 		echo "Could not delete service file."
 
 run-local:
-	@CL_DEBUG=1 python -m codeline
+	@CL_DEBUG=1 poetry run python -m codeline
