@@ -22,10 +22,10 @@ The goal is to combine the expressiveness of command-line tools with the power o
 
 ## Usage
 Codeline can monitor the current directory for file-changes, and then run any commands it finds:  
-`CL_DEBUG=1 poetry run codeline --watch .`
+`CL_DEBUG=1 poetry run python -m codeline --watch .`
 
 Alternatively you can run Codeline on a single file, executing any commands the file and then exiting.  
-`CL_DEBUG=1 poetry run codeline --run path/to/python/file.py`
+`CL_DEBUG=1 poetry run python -m codeline --run path/to/python/file.py`
 
 ## Commands
 
