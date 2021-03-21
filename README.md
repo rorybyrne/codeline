@@ -16,7 +16,7 @@
 <h2>Installation</h2>
 Codeline is in a pre-release state, so I recommend that you don't try to use it.
 <p>
-  If you really want to, then clone the repository and use <code>poetry</code> to install dependencies.
+  If you really want to, then clone the repository and use <code>poetry</code> to install dependencies. To make Codeline watch the current directory for commands, run `CL_DEBUG=1 python -m codeline --watch .`, and to run Codeline on a single file run `CL_DEBUG=1 python -m codeline --file path/to/file.py`.
 </p>
 <h3>Requirements</h3>
 <code>python3.8</code>
