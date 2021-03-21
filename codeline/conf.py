@@ -26,7 +26,7 @@ class Settings():
     development = {
         "projects_file": str(Path(__file__, "../../dev/projects.json").resolve()),
         "plugin_directory": str(Path(__file__, "../../plugins").resolve()),
-        "log_conf": str(Path(__file__, "../../dev/log.conf").resolve())
+        "log_conf": str(Path(__file__, "../../log.conf").resolve())
     }
 
     # Builders ##################################
