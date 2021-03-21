@@ -1,12 +1,12 @@
 import re
 
-from codeline.sdk.util.regex import CommandRegex
+from codeline.sdk.util import regex
 
 
 def test_successful_parse_command():
     s = "# <| git commit -m 'howdy'"
     s2 = "    # <| git commit -m 'howdy'"
-    regexp = re.compile(CommandRegex.PYTHON)
+    regexp = re.compile(regex.PYTHON)
 
     r = regexp.search(s)
     assert r is not None and r.group(1) == "git"
@@ -21,7 +21,7 @@ def test_failure_parse_bad_commands():
     s4 = "# <|"
     s5 = "# <| "
     s6 = "# <|  "
-    regexp = re.compile(CommandRegex.PYTHON)
+    regexp = re.compile(regex.PYTHON)
 
     assert not regexp.search(s)
     assert not regexp.search(s2)
@@ -33,6 +33,6 @@ def test_failure_parse_bad_commands():
 
 def test_extract_command_success():
     line = "    # <| echo 'howdy'"
-    command, options = CommandRegex.extract_command_and_tail(line)
+    command, options = regex.extract_command_and_tail(line)
     assert command == "echo"
     assert options == "'howdy'"

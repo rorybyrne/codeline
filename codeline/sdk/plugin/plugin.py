@@ -2,7 +2,7 @@
 
 Author: Rory Byrne <rory@rory.bio>
 """
-from abc import abstractmethod, ABC
+from abc import ABC, abstractmethod
 from argparse import ArgumentParser
 
 from codeline.sdk.context.context import Context
@@ -14,8 +14,8 @@ class CodelinePlugin(ABC):
 
     Your plugin should provide a trigger string which Codeline watches for.
     """
-    title = None
-    trigger = None
+    title: str
+    trigger: str
 
     @abstractmethod
     def main(self, context: Context, **kwargs) -> Result:

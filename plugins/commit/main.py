@@ -3,10 +3,9 @@
 Author: Rory Byrne <rory@rory.bio>
 """
 import subprocess
+import time
 from argparse import ArgumentParser
 from pathlib import Path
-
-import time
 
 from codeline.sdk import CodelinePlugin
 from codeline.sdk.context.context import Context
@@ -14,7 +13,7 @@ from codeline.sdk.context.file import File
 from codeline.sdk.context.line import CommandLine
 from codeline.sdk.exception import PluginException
 from codeline.sdk.plugin.result import Result
-from plugins.git.unidiff import Hunk, PatchedFile, PatchSet
+from plugins.commit.unidiff import Hunk, PatchedFile, PatchSet
 
 
 class Plugin(CodelinePlugin):
@@ -33,7 +32,6 @@ class Plugin(CodelinePlugin):
         if not message:
             raise PluginException("Codeline didn't pass in a commit message")
 
-
         # Write file without command line
         lines = [line for line in context.file if not isinstance(line, CommandLine)]
         new_file = File(lines, context.file.path)
@@ -45,12 +43,11 @@ class Plugin(CodelinePlugin):
 
         # Commit
         self._do_apply(patched_file)
-        print(patched_file)
         self._do_commit(message)
 
         # Response
         context.write_response("Done.")
-        time.sleep(1)
+        time.sleep(3)
         context.clear()
 
         return Result(True, "Plugin executed successfully.")
@@ -59,7 +56,7 @@ class Plugin(CodelinePlugin):
         """Defined argparse arguments for the command"""
         parser.add_argument('-m', dest='message', type=str, required=True)
 
-    # Patch functionality ####################### 
+    # Patch functionality #######################
 
     def _create_patch(self, file: Path, start_line_no: int) -> PatchedFile:
         """Creates a patch file for the hunk containing the given"""

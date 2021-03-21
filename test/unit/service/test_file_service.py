@@ -1,4 +1,5 @@
 import tempfile
+from pathlib import Path
 
 from codeline.service.file import FileService
 
@@ -11,11 +12,12 @@ SOURCE_CODE = b"""def my_function(input: str):
 
 
 def test_read_lines_success():
+    """Reading lines into a File instance"""
     service = FileService()
     with tempfile.NamedTemporaryFile() as fp:
         fp.write(SOURCE_CODE)
         fp.seek(0)
 
-        file = service.read(fp.name)
+        file_path = Path(fp.name)
+        file = service.read(file_path)
         assert len(file) == 5
-

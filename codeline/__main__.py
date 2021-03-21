@@ -2,18 +2,22 @@
 
 Author: Rory Byrne <rory@rory.bio>
 """
+
 import logging
+import os
 import sys
+from pathlib import Path
 
 from dependency_injector.wiring import Provide, inject
 
+from codeline.conf import Settings
 from codeline.containers import Codeline
 from codeline.oracle.oracle import Oracle
 from codeline.service.command import CommandService
 from codeline.util import log
-from codeline.util.configure import configure
 
 logger = logging.getLogger(f'codeline.{__name__}')
+DEBUG = os.environ.get('CL_DEBUG')
 
 
 def main():
@@ -21,27 +25,26 @@ def main():
 
     If a file is passed in via argv, that will be run directly.
     """
+    settings = Settings.load(debug=DEBUG)
     codeline = Codeline()
-    configure(codeline, debug=True)
-    log_conf = codeline.config.core.log_conf()
+    codeline.config.from_dict(vars(settings))
+
+    log_conf = codeline.config.log_conf()
     log.configure(log_conf)
 
     logger.info("Launching Codeline...")
     codeline.wire(modules=[sys.modules[__name__]])
 
-    try:
-        if len(sys.argv) > 1:
-            file_path = sys.argv[1]
-            launch_direct(file_path)
-        else:
-            launch()
-    except Exception as e:
-        logger.exception(e)
+    if len(sys.argv) > 1:
+        file_path = Path(sys.argv[1])
+        launch_direct(file_path)
+    else:
+        launch()
 
 
 @inject
 def launch_direct(
-    file_path: str,
+    file_path: Path,
     command_service: CommandService = Provide[Codeline.services.command_service]
 ):
     """Process a file directly"""

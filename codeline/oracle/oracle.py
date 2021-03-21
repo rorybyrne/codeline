@@ -2,13 +2,14 @@
 
 @author Rory Byrne <rory@rory.bio>
 """
+
 import logging
+from time import sleep
 from typing import Dict, List
 
-from time import sleep
-from watchdog.events import FileSystemEventHandler
-from watchdog.observers import Observer
-from watchdog.observers.api import ObservedWatch
+from watchdog.events import FileSystemEventHandler  # type: ignore
+from watchdog.observers import Observer  # type: ignore
+from watchdog.observers.api import ObservedWatch  # type: ignore
 
 from codeline.oracle.handler.project import ProjectEventHandler
 from codeline.oracle.handler.registry import RegistryEventHandler

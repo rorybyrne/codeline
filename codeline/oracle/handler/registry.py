@@ -3,10 +3,10 @@
 Author: Rory Byrne <rory@rory.bio>
 """
 
-from typing import Tuple, Callable
-
 from time import time
-from watchdog.events import FileSystemEvent
+from typing import Callable, Optional, Tuple
+
+from watchdog.events import FileSystemEvent  # type: ignore
 
 from codeline.oracle.handler.base import BaseEventHandler
 from codeline.service.registry import RegistryService
@@ -20,7 +20,7 @@ class RegistryEventHandler(BaseEventHandler):
     def __init__(self, registry_service: RegistryService):
         super().__init__()
         self._registry_service = registry_service
-        self._handler = None
+        self._handler: Optional[Callable] = None
 
     def on_created(self, event: FileSystemEvent):
         """Pass the event to the Guru to update the plan state"""

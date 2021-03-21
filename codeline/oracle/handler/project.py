@@ -3,11 +3,16 @@
 Author: Rory Byrne <rory@rory.bio>
 """
 
-from watchdog.events import FileSystemEvent
+import logging
+from pathlib import Path
+
+from watchdog.events import FileSystemEvent  # type: ignore
 
 from codeline.oracle.handler.base import BaseEventHandler
 from codeline.service.command import CommandService
 from codeline.service.file import FileService
+
+log = logging.getLogger(__name__)
 
 
 class ProjectEventHandler(BaseEventHandler):
@@ -22,10 +27,12 @@ class ProjectEventHandler(BaseEventHandler):
 
     def on_modified(self, event: FileSystemEvent):
         """Handle modification events"""
-        event_path = event.src_path
-        if not self._file.is_file(event_path):
+        event_path = Path(event.src_path)
+        if not event_path.is_file():
             return
-        elif not event_path.endswith('.py'):
+
+        if event_path.suffix != '.py':
             return
-        else:
-            self._command.process_file(event_path)
+
+        log.debug(f'READING -> {event_path}')
+        self._command.process_file(event_path)
