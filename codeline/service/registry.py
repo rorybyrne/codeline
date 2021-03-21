@@ -4,7 +4,7 @@ Author: Rory Byrne <rory@rory.bio>
 """
 import json
 import logging
-import os
+from pathlib import Path
 from typing import List
 
 from codeline.model.project import Project
@@ -19,7 +19,7 @@ class RegistryService:
     you must run `codeline activate <src_dir>` in the root directory of the project.
     """
 
-    def __init__(self, projects_file: str):
+    def __init__(self, projects_file: Path):
         super().__init__()
         assert projects_file, "Projects filename missing"
         self._projects_file = projects_file
@@ -41,12 +41,13 @@ class RegistryService:
         if project_registered:
             log.debug(f'Project already registered: {project}')
             return
-        else:
-            self._register(project)
+
+        self._register(project)
 
     @property
     def directory(self):
-        return os.path.dirname(self._projects_file)
+        """Returns the path of the projects file"""
+        return self._projects_file
 
     # Private ###
 
@@ -64,9 +65,9 @@ class RegistryService:
         projects = self._load_projects()
         if self._project_is_registered(project):
             raise RuntimeError("Project already exists")
-        else:
-            projects.append(project)
-            self._save_projects(projects)
+
+        projects.append(project)
+        self._save_projects(projects)
 
     def _load_projects(self) -> List[Project]:
         """Loads registered projects from the projects file"""
@@ -78,8 +79,8 @@ class RegistryService:
                     raise RuntimeError(f"Invalid projects file: {self._projects_file}")
 
                 return [Project(pj) for pj in projects]
-        except FileNotFoundError:
-            raise RuntimeError(f"Could not find projects file: {self._projects_file}")
+        except FileNotFoundError as e:
+            raise RuntimeError(f"Could not find projects file: {self._projects_file}") from e
 
     def _save_projects(self, projects: List[Project]):
         """Saves the list of projects, overwriting the current file"""
@@ -94,5 +95,5 @@ class RegistryService:
                 f.seek(0)
                 json.dump(projects_data, f)
                 f.truncate()
-        except FileNotFoundError:
-            raise RuntimeError(f"Could not find projects file: {self._projects_file}")
+        except FileNotFoundError as e:
+            raise RuntimeError(f"Could not find projects file: {self._projects_file}") from e

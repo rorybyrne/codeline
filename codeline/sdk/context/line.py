@@ -25,6 +25,7 @@ class Line(ABC):
 
     @property
     def text(self):
+        """The text of the line"""
         return self._text
 
     @text.setter
@@ -42,14 +43,15 @@ class CommandLine(Line):
         response        The response that the plugin has currently set for the coder
     """
     _command: str
-    _options: str
+    _options: Optional[str]
     _response: Optional[str] = field(init=False, default=None)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self._text} | {self._response}'
 
     @property
-    def response(self):
+    def response(self) -> Optional[str]:
+        """The response message in the command line"""
         return self._response
 
     @response.setter
@@ -57,9 +59,11 @@ class CommandLine(Line):
         self._response = response
 
     @property
-    def command(self):
+    def command(self) -> str:
+        """The command word"""
         return self._command
 
     @property
-    def options(self):
+    def options(self) -> Optional[str]:
+        """The options passed to the command"""
         return self._options

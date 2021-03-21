@@ -26,16 +26,9 @@
 
 from __future__ import unicode_literals
 
-from plugins.git.unidiff import __version__
-from plugins.git.unidiff.patch import (
-    DEFAULT_ENCODING,
-    LINE_TYPE_ADDED,
-    LINE_TYPE_CONTEXT,
-    LINE_TYPE_REMOVED,
-    Hunk,
-    PatchedFile,
-    PatchSet,
-    UnidiffParseError,
-)
+from . import __version__
+from .patch import (DEFAULT_ENCODING, LINE_TYPE_ADDED, LINE_TYPE_CONTEXT,
+                    LINE_TYPE_REMOVED, Hunk, PatchedFile, PatchSet,
+                    UnidiffParseError)
 
 VERSION = __version__.__version__

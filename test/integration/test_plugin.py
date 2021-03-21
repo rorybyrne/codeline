@@ -1,5 +1,5 @@
-from os.path import dirname, join
 import tempfile
+from pathlib import Path
 
 from codeline.service.command import CommandService
 from codeline.service.file import FileService
@@ -13,18 +13,19 @@ SOURCE = """def myfunc():
 
 
 def test_process_file_success():
-    fs = FileService()
-    root_dir = dirname(dirname(dirname(__file__)))
-    plugins_dir = join(root_dir, 'plugins')
-    ps = PluginService(plugins_dir)
-    cs = CommandService(ps, fs)
+    """Should succeed"""
+    file_service = FileService()
+    root_dir = Path(__file__).parent.parent.parent
+    plugins_dir = root_dir / 'plugins'
+    plugin_service = PluginService(plugins_dir)
+    command_service = CommandService(plugin_service, file_service)
 
-    with tempfile.TemporaryDirectory() as td:
-        source_file = join(td, 'source.py')
+    with tempfile.TemporaryDirectory() as temp_dir:
+        source_file = Path(temp_dir) / 'source.py'
         with open(source_file, 'a') as f:
             f.write(SOURCE)
 
-        cs.process_file(source_file)
+        command_service.process_file(source_file)
         with open(source_file, 'r') as f:
             lines = f.readlines()
             assert len(lines) == 3

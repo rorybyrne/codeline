@@ -2,8 +2,10 @@
 
 Author: Rory Byrne <rory@rory.bio>
 """
+
 import logging
 from dataclasses import dataclass
+from typing import Optional
 
 from codeline.model.pluginmeta import PluginMeta
 from codeline.sdk.context.context import Context
@@ -22,7 +24,7 @@ class Command:
         context     Context about the command to be passed into the plugin when it runs
     """
     trigger: str
-    options: str
+    options: Optional[str]
     plugin: PluginMeta
     context: Context
 

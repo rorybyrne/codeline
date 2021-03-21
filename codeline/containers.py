@@ -2,8 +2,9 @@
 
 @author Rory Byrne <rory@rory.bio>
 """
-from dependency_injector import providers, containers
-from watchdog.observers.polling import PollingObserver
+
+from dependency_injector import containers, providers
+from watchdog.observers.polling import PollingObserver  # type: ignore
 
 from codeline.oracle.handler.project import ProjectEventHandler
 from codeline.oracle.handler.registry import RegistryEventHandler
@@ -20,7 +21,7 @@ class Services(containers.DeclarativeContainer):
     config = providers.Configuration()
 
     registry_service = providers.Singleton(
-        RegistryService, projects_file=config.core.projects_file
+        RegistryService, projects_file=config.projects_file
     )
 
     file_service = providers.Singleton(
@@ -28,7 +29,7 @@ class Services(containers.DeclarativeContainer):
     )
 
     plugin_service = providers.Singleton(
-        PluginService, plugin_directory=config.core.plugin_directory
+        PluginService, plugin_directory=config.plugin_directory
     )
 
     command_service = providers.Singleton(
@@ -56,7 +57,7 @@ class Observer(containers.DeclarativeContainer):
     )
 
     # Third-Party Dependencies
-    observer = providers.Singleton(PollingObserver)
+    observer: providers.Singleton = providers.Singleton(PollingObserver)
 
 
 class Codeline(containers.DeclarativeContainer):

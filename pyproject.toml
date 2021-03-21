@@ -14,11 +14,20 @@ cachetools = "^4.2.1"
 tox = "^3.23.0"
 pytest = "^6.2.2"
 flake8 = "^3.9.0"
+pylint = "^2.7.2"
+mypy = "^0.812"
+autoimport = "^0.6.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pylint.MASTER]
-good-names = "id, fp, e"
+extension-pkg-whitelist = "dependency_injector"
+generated-members = "dependency_injector.*, codeline.containers.*"
+good-names = "id, f, e"
 max-line-length = 120
+disable = ["logging-fstring-interpolation", "too-few-public-methods", "cell-var-from-loop"]
+
+[tool.isort]
+known_first_party = ['codeline']

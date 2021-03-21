@@ -3,10 +3,10 @@
 Author: Rory Byrne <rory@rory.bio>
 """
 from dataclasses import dataclass, field
-from typing import List, Any, Optional
+from typing import Any, List, Optional
 
 from codeline.sdk.context.file import File
-from codeline.sdk.context.line import Line, CommandLine
+from codeline.sdk.context.line import CommandLine, Line
 
 Writer = Any  # Implemented in Codeline
 
@@ -68,6 +68,7 @@ class Context:
         self._writer = writer
 
     def write(self, file: Optional[File] = None):
+        """Writes the file out to disk"""
         if not self._writer:
             raise ValueError("Writer is none")
 

@@ -132,3 +132,4 @@ dev/
 .tox/
 .vscode/
 Session.vim
+.tags

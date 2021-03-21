@@ -29,26 +29,15 @@ from __future__ import unicode_literals
 import codecs
 import sys
 
-from plugins.git.unidiff.constants import (
-    DEFAULT_ENCODING,
-    LINE_TYPE_ADDED,
-    LINE_TYPE_CONTEXT,
-    LINE_TYPE_EMPTY,
-    LINE_TYPE_REMOVED,
-    LINE_TYPE_NO_NEWLINE,
-    LINE_VALUE_NO_NEWLINE,
-    RE_HUNK_BODY_LINE,
-    RE_HUNK_EMPTY_BODY_LINE,
-    RE_HUNK_HEADER,
-    RE_RENAME_SOURCE_FILENAME,
-    RE_RENAME_TARGET_FILENAME,
-    RE_SOURCE_FILENAME,
-    RE_TARGET_FILENAME,
-    RE_NO_NEWLINE_MARKER,
-    RE_BINARY_DIFF,
-)
-from plugins.git.unidiff.errors import UnidiffParseError
-
+from .constants import (DEFAULT_ENCODING, LINE_TYPE_ADDED, LINE_TYPE_CONTEXT,
+                        LINE_TYPE_EMPTY, LINE_TYPE_NO_NEWLINE,
+                        LINE_TYPE_REMOVED, LINE_VALUE_NO_NEWLINE,
+                        RE_BINARY_DIFF, RE_HUNK_BODY_LINE,
+                        RE_HUNK_EMPTY_BODY_LINE, RE_HUNK_HEADER,
+                        RE_NO_NEWLINE_MARKER, RE_RENAME_SOURCE_FILENAME,
+                        RE_RENAME_TARGET_FILENAME, RE_SOURCE_FILENAME,
+                        RE_TARGET_FILENAME)
+from .errors import UnidiffParseError
 
 PY2 = sys.version_info[0] == 2
 if PY2:

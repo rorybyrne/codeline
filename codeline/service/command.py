@@ -2,9 +2,11 @@
 
 Author: Rory Byrne <rory@rory.bio>
 """
+
 import logging
-from argparse import ArgumentParser
 import shlex
+from argparse import ArgumentParser
+from pathlib import Path
 from typing import List
 
 from codeline.model.command import Command
@@ -30,7 +32,7 @@ class CommandService:
         self._plugin = plugin_service
         self._file = file_service
 
-    def process_file(self, file_path: str):
+    def process_file(self, file_path: Path):
         """Process a file into commands, and run those commands"""
         file = self._file.read(file_path)
         commands = self._parse_commands(file)
@@ -62,10 +64,12 @@ class CommandService:
 
     @staticmethod
     def _parse_args(command: Command):
+        if not command.options:
+            return {}
+
         parser = ArgumentParser(command.plugin.title)
         command.plugin.implementation.define_arguments(parser)
 
-        print(f"Parsing: '{shlex.split(command.options)}'")
         namespace = parser.parse_args(shlex.split(command.options))
         return vars(namespace)
 
@@ -75,7 +79,7 @@ class CommandService:
             command
             for i, _ in enumerate(file)
             # pylint: disable=cell-var-from-loop
-            if (command := catch(lambda: self._parse_command(file, i))) is not None
+            if (command := catch(lambda: self._parse_command(file, i), to_catch=ValueError)) is not None
         ]
 
     def _parse_command(self, file: File, line_no: int) -> Command:
@@ -93,5 +97,5 @@ class CommandService:
 
     @staticmethod
     def _build_context(file: File, line_no: int) -> Context:
-        """Build a context for the plugin to receive"""
+        """Build a contextefor the plugin to receive"""
         return Context(file, line_no)

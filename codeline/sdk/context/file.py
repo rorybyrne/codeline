@@ -21,7 +21,8 @@ class File:
     def __setitem__(self, index: int, value: Line):
         if not isinstance(index, int):
             raise TypeError("Must index a file with an integer value")
-        elif not isinstance(value, Line):
+
+        if not isinstance(value, Line):
             raise TypeError("Expected a Line instance")
 
         self.lines[index] = value
