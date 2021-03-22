@@ -44,9 +44,9 @@ class CommandService:
         """Runs the given command"""
         writer = Writer(command.context.file.path)
         command.context.set_writer(writer)
-        kwargs = self._parse_args(command)
 
         try:
+            kwargs = self._parse_args(command)
             result = command.plugin.invoke(command.context, **kwargs)
             if not result.successful:
                 log.debug("Command failed.")
@@ -59,6 +59,8 @@ class CommandService:
         except Exception:
             command.context.write_response("An unknown error occurred")
             raise
+        except SystemExit:  # We should subclass ArgumentParser for better error handling
+            command.context.write_response("Invalid arguments")
 
     # Private ###############################################################################
 

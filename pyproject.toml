@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Run code-aware commands directly from your comments"
 authors = ["Rory Byrne <rory@rory.bio>"]
 
+[tool.poetry.scripts]
+codeline = "codeline.__main__:main"
+
 [tool.poetry.dependencies]
 python = "^3.9"
 watchdog = "^2.0.2"

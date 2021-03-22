@@ -27,4 +27,4 @@ class Plugin(CodelinePlugin):
 
     def define_arguments(self, parser: ArgumentParser):
         subparsers = parser.add_subparsers(dest="subcommand")
-        subparsers.add_parser("howdy")
+        subparsers.add_parser("run")

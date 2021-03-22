@@ -45,7 +45,7 @@ class RegistryService:
         self._register(project)
 
     @property
-    def directory(self):
+    def projects_file(self):
         """Returns the path of the projects file"""
         return self._projects_file
 

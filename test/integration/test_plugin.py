@@ -6,7 +6,7 @@ from codeline.service.file import FileService
 from codeline.service.plugin import PluginService
 
 SOURCE = """def myfunc():
-    # <| test howdy
+    # <| test run
     print("howdy")
     return
 """
@@ -17,7 +17,7 @@ def test_process_file_success():
     file_service = FileService()
     root_dir = Path(__file__).parent.parent.parent
     plugins_dir = root_dir / 'plugins'
-    plugin_service = PluginService(plugins_dir)
+    plugin_service = PluginService([plugins_dir])  # Pass in a list of paths
     command_service = CommandService(plugin_service, file_service)
 
     with tempfile.TemporaryDirectory() as temp_dir:
