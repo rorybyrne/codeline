@@ -35,6 +35,19 @@ Alternatively you can run Codeline on a single file, executing any commands the 
 
 Currently, commands are implemented as Python plugins. The SDK for building commands is found in `codeline/sdk`.
 
+### Test
+The test command doesn't do anything, but shows how commands work.
+
+Example usage:
+```
+def some_function():
+    # <| test run
+    do_something()
+    more_stuff()
+```
+
+If Codeline is monitoring the directory, then it will run the command when you save the file.
+
 ### Commit
 This command allows you to automatically commit a "hunk" of code. 
 
@@ -45,6 +58,8 @@ def myfunc(data):
     data.do_something()
     print("done")
 ```
+
+If Codeline is monitoring the directory, then it will run the command when you save the file.
 
 ## Future Work
 
