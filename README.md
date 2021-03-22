@@ -16,9 +16,9 @@
 
 ## Current State
 
-*Codeline is functional, but is still in the very-early stages of development.*  
+*Codeline is functional, and there are two working commands so far (see below). However, it is still in the very-early stages of development.*  
 
-Please join the [discussions](https://github.com/synek/codeline/discussions), add issues, and get involved.
+Please join the [discussions](https://github.com/synek/codeline/discussions), add [issues](https://github.com/synek/codeline/issues), and get involved.
 
 ## Installation
 
