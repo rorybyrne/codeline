@@ -26,10 +26,10 @@ Please join the [discussions](https://github.com/synek/codeline/discussions), ad
 
 ## Usage
 Codeline can monitor the current directory for file-changes, and then run any commands it finds:  
-`CL_DEBUG=1 poetry run python -m codeline --watch .`
+`codeline --watch .`
 
 Alternatively you can run Codeline on a single file, executing any commands the file and then exiting.  
-`CL_DEBUG=1 poetry run python -m codeline --run path/to/python/file.py`
+`codeline --run path/to/python/file.py`
 
 ## Commands
 
