@@ -8,7 +8,7 @@ import importlib.util
 import logging
 import sys
 from pathlib import Path
-from typing import Type
+from typing import Dict, List, Type
 
 from codeline.exceptions import (PluginImplementationException,
                                  PluginNotFoundException)
@@ -22,13 +22,20 @@ log = logging.getLogger(__name__)
 class PluginService:
     """Functionality to load and handle plugins"""
 
-    def __init__(self, plugin_directory: Path):
+    def __init__(self, plugin_directories: List[Path]):
         """Load plugins on-startup"""
         super().__init__()
-        log.debug(f'Loading plugins from {plugin_directory}')
-        sys.path.insert(0, str(plugin_directory))
-        loaded_plugins = self._load_all_plugins(plugin_directory)
-        self._plugins = {plugin.trigger: plugin for plugin in loaded_plugins}
+        self._plugins: Dict[str, PluginMeta] = {}
+        for directory in plugin_directories:
+            log.debug(f'Loading plugins from {directory}')
+            if not directory.is_dir():
+                log.debug(f'Skipping non-existent plugin directory: {directory}')
+                continue
+
+            sys.path.insert(0, str(directory))
+            loaded_plugins = self._load_all_plugins(directory)
+            self._plugins.update({plugin.trigger: plugin for plugin in loaded_plugins})
+
         for name, _ in self._plugins.items():
             log.debug(f'Loaded plugin: {name}')
 

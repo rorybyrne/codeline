@@ -4,6 +4,7 @@ Author: Rory Byrne <rory@rory.bio>
 """
 from dataclasses import dataclass
 from pathlib import Path
+from typing import List
 
 
 @dataclass
@@ -14,18 +15,15 @@ class Settings():
     """
 
     projects_file: Path
-    plugin_directory: Path
+    plugin_directories: List[Path]
     log_conf: Path
 
     default = {
-        "projects_file": str(Path("~/.local/share/codeline/projects.json").resolve()),
-        "plugin_directory": str(Path("~/.local/share/codeline/plugins").resolve()),
-        "log_conf": str(Path(__file__, "../../log.conf").resolve())
-    }
-
-    development = {
-        "projects_file": str(Path(__file__, "../../dev/projects.json").resolve()),
-        "plugin_directory": str(Path(__file__, "../../plugins").resolve()),
+        "projects_file": str(Path("~/.local/share/codeline/projects.json").expanduser()),
+        "plugin_directories": [
+            str(Path("~/.local/share/codeline/plugins").expanduser()),
+            str(Path(__file__, "../../plugins").resolve())
+        ],
         "log_conf": str(Path(__file__, "../../log.conf").resolve())
     }
 
@@ -47,17 +45,10 @@ class Settings():
         return Settings.default
 
     @staticmethod
-    def _development() -> dict:
-        """Return the development settings"""
-        return Settings.development
-
-    @staticmethod
-    def load(debug: bool = False) -> "Settings":
+    def load() -> "Settings":
         """Load the settings"""
-        if debug:
-            main_settings = Settings._development()
-        else:
-            main_settings = Settings._default()
+        main_settings = Settings._default()
+        plugin_dirs = main_settings["plugin_directories"]
 
         local_settings = Settings._from_local()
         project_settings = Settings._from_project()
@@ -67,7 +58,7 @@ class Settings():
 
         settings = Settings(
             Path(main_settings["projects_file"]),
-            Path(main_settings["plugin_directory"]),
+            [Path(directory) for directory in plugin_dirs],
             Path(main_settings["log_conf"]),
         )
 

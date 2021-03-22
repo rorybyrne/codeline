@@ -29,7 +29,7 @@ class Services(containers.DeclarativeContainer):
     )
 
     plugin_service = providers.Singleton(
-        PluginService, plugin_directory=config.plugin_directory
+        PluginService, plugin_directories=config.plugin_directories
     )
 
     command_service = providers.Singleton(

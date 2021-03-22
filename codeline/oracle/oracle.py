@@ -30,7 +30,7 @@ class Oracle:
         assert observer, "Observer missing"
         self._registry_service = registry_service
         self._observer = observer
-        self._plan_home = self._registry_service.directory
+        self._projects_file = self._registry_service.projects_file
 
         self._watches_by_dir: Dict[str, ObservedWatch] = dict()
 
@@ -45,8 +45,11 @@ class Oracle:
             self.watch(str(project_dir), self._project_event_handler, recursive=True)
             self._start()
         else:
+            if not self._projects_file.is_file():
+                raise FileNotFoundError(f"Projects file does not exist: {self._projects_file}")
+
             # Watch the plan_home directory
-            self.watch(self._plan_home, self._registry_event_handler, recursive=False)
+            self.watch(self._projects_file, self._registry_event_handler, recursive=False)
 
             # Watch the registered workspaces
             projects = self._registry_service.load_projects()
@@ -85,7 +88,7 @@ class Oracle:
 
     def _reconcile(self, project_dirs: List[str]):
         """Watch any new projects, and unwatch any which have been removed"""
-        watched_projects = [d for d in self._watched_paths if d != self._plan_home]
+        watched_projects = [d for d in self._watched_paths if d != self._projects_file]
         for project in project_dirs:
             if project not in watched_projects:
                 self.watch(project, self._project_event_handler, recursive=True)
