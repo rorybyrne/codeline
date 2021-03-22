@@ -9,9 +9,10 @@
 ![codeline](https://user-images.githubusercontent.com/9436784/111068981-d959e080-84c2-11eb-9b13-7b00d751fc10.gif)
 ![tests](https://github.com/synek/codeline/workflows/Full%20Tests/badge.svg)
 
-Codeline allows you to run custom commands directly from source-code comments, combining the expressiveness of the command-line with the power of an extensions API like VS Code. 
+<p align="center">
+  Codeline allows you to run custom commands directly from source-code comments, combining the power of IDE extensions with the expressiveness of the command-line.
+</p>
 
-Codeline allows you to pipe commands together, and automatically updates the comment in-place with command results, allowing for a semi-interactive experience.
 
 ## Current State
 
@@ -21,17 +22,17 @@ Please join the [discussions](https://github.com/synek/codeline/discussions), ad
 
 ## Installation
 
-`git clone https://github.com/synek/codeline.git`  
-`poetry install`
+* `git clone https://github.com/synek/codeline.git`
+* `poetry install`
 
-## Usage
+## Development
 Codeline can monitor the current directory for file-changes, and then run any commands it finds:  
 `poetry run codeline --watch .`
 
 Alternatively you can run Codeline on a single file, executing any commands the file and then exiting.  
 `poetry run codeline --run path/to/python/file.py`
 
-(If you `source` the virtualenvironment then you can run `codeline` directly)
+To build a command, copy the `plugins/test_plugin` as a starting point.
 
 ## Commands
 
